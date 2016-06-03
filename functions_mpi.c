@@ -13,6 +13,20 @@
 #define WYNIK 6
 #define DATA 7
 
+void show_mat(int**mat,int n,int m )
+{
+				printf("WYNIK:\n");
+				for (int i = 0; i < n; i++) 
+				{
+					for (int j = 0; j < m; j++) 
+					{
+						printf("%d ", mat[i][j]);
+					}
+					printf("\n");
+				}
+				printf("End of Show \n");
+}
+
 
 int malloc2dfloat(int ***array, int n, int m) {
 
@@ -91,7 +105,8 @@ void find_subs_mpi(int** mat,int ssum,int size,int ssize)
 	int **wynik;
 	malloc2dfloat(&wynik,ssize,ssize);
 	for (int o=0;o<max_off;o++)
-	{	int sum=0;
+	{	
+		int sum=0;
 		for (int i=0;i<ssize;i++)
 		{
 			for( int j=0;j<ssize;j++)
@@ -99,7 +114,6 @@ void find_subs_mpi(int** mat,int ssum,int size,int ssize)
 				sum+=mat[i][j+o];
 			}
 		}
-	
 		if(sum==ssum)
 		{
 			for (int i = 0; i < ssize; i++) 
@@ -109,6 +123,7 @@ void find_subs_mpi(int** mat,int ssum,int size,int ssize)
 					wynik[i][j]=mat[i][j+o];
 				}
 			}
+		
 		 MPI_Send(&(wynik[0][0]), ssize*ssize, MPI_INT, 0, WYNIK, MPI_COMM_WORLD);
 		}
 			
@@ -116,20 +131,6 @@ void find_subs_mpi(int** mat,int ssum,int size,int ssize)
 	free2dfloat(&wynik);
 	
 
-}
-
-void show_mat(int**mat,int k)
-{
-
-				for (int i = 0; i < k; i++) 
-				{
-					for (int j = 0; j < k; j++) 
-					{
-						printf("%3d ", mat[i][j]);
-					}
-					printf("\n");
-				}
-				printf("End of Show \n");
 }
 
 
